@@ -16,6 +16,22 @@ const Navbar = () => {
   const searchContainerRef = useRef(null);
   const [showCart, setShowCart] = useState(false);
 
+  // دالة لإغلاق الـoffcanvas لو مفتوح
+  const closeOffcanvas = () => {
+    const offcanvas = document.getElementById("bdNavbar");
+    if (offcanvas && offcanvas.classList.contains("show")) {
+      // Bootstrap 5: استخدم hide من الكائن
+      const bsOffcanvas = window.bootstrap?.Offcanvas?.getInstance(offcanvas);
+      if (bsOffcanvas) {
+        bsOffcanvas.hide();
+      } else {
+        // fallback: إزالة الكلاس يدويًا
+        offcanvas.classList.remove("show");
+        document.body.classList.remove("offcanvas-backdrop", "show");
+      }
+    }
+  };
+
   // بيانات الاقتراحات
   const suggestionsData = [
     "أكياس ورقية",
@@ -76,7 +92,10 @@ const Navbar = () => {
 
   const handleLoginClick = (e) => {
     e.preventDefault();
-    setShowLoginModal(true);
+    closeOffcanvas(); // أغلق الـoffcanvas لو مفتوح
+    setTimeout(() => {
+      setShowLoginModal(true);
+    }, 200); // تأخير بسيط لضمان إغلاق الـoffcanvas أولاً
   };
 
   const LoginRegisterModal = () => (
@@ -290,22 +309,22 @@ const Navbar = () => {
                   className="navbar-nav text-uppercase justify-content-start justify-content-lg-start align-items-start align-items-lg-center flex-grow-1"
                 >
                   <li className="nav-item">
-                    <a className="nav-link me-3 active" href="#">
+                    <a className="nav-link me-3 active" href="#" onClick={closeOffcanvas}>
                       الصفحة الرئيسية
                     </a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link me-3" href="#one">
+                    <a className="nav-link me-3" href="#one" onClick={closeOffcanvas}>
                       ما نزل مؤخرأ
                     </a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link me-3" href="#categories">
+                    <a className="nav-link me-3" href="#categories" onClick={closeOffcanvas}>
                       الأقسام
                     </a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link me-3" href="#best-selling">
+                    <a className="nav-link me-3" href="#best-selling" onClick={closeOffcanvas}>
                       الأكثر طلباً
                     </a>
                   </li>
@@ -318,34 +337,47 @@ const Navbar = () => {
                       المستلزمات
                     </Dropdown.Toggle>
                     <Dropdown.Menu className="animate slide border">
-                      <Dropdown.Item href="index.html" className="fw-light">
+                      <Dropdown.Item href="index.html" className="fw-light" onClick={closeOffcanvas}>
                         مستلزمات الأكياس
                       </Dropdown.Item>
-                      <Dropdown.Item href="index.html" className="fw-light">
+                      <Dropdown.Item href="index.html" className="fw-light" onClick={closeOffcanvas}>
                         مستلزمات تغليف الملابس
                       </Dropdown.Item>
-                      <Dropdown.Item href="index.html" className="fw-light">
+                      <Dropdown.Item href="index.html" className="fw-light" onClick={closeOffcanvas}>
                         مستلزمات التغليف
                       </Dropdown.Item>
-                      <Dropdown.Item href="index.html" className="fw-light">
+                      <Dropdown.Item href="index.html" className="fw-light" onClick={closeOffcanvas}>
                         مستلزمات الشحن
                       </Dropdown.Item>
-                      <Dropdown.Item href="index.html" className="fw-light">
+                      <Dropdown.Item href="index.html" className="fw-light" onClick={closeOffcanvas}>
                         مستلزمات الاطعمه والمشروبات
                       </Dropdown.Item>
-                      <Dropdown.Item href="index.html" className="fw-light">
+                      <Dropdown.Item href="index.html" className="fw-light" onClick={closeOffcanvas}>
                         مستلزمات الأعياد وحفلات الميلاد
                       </Dropdown.Item>
-                      <Dropdown.Item href="index.html" className="fw-light">
+                      <Dropdown.Item href="index.html" className="fw-light" onClick={closeOffcanvas}>
                         مستلزمات العطور
                       </Dropdown.Item>
-                      <Dropdown.Item href="index.html" className="fw-light">
+                      <Dropdown.Item href="index.html" className="fw-light" onClick={closeOffcanvas}>
                         مستلزمات الأكسسوارات
                       </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
                   <li className="nav-item">
-                    <a className="nav-link me-3" href="#contact-2">
+                    <a
+                      className="nav-link me-3"
+                      href="#contact-2"
+                      onClick={e => {
+                        e.preventDefault();
+                        const el = document.getElementById('contact-2');
+                        if (el) {
+                          el.scrollIntoView({ behavior: 'smooth' });
+                          setTimeout(() => closeOffcanvas(), 500);
+                        } else {
+                          closeOffcanvas();
+                        }
+                      }}
+                    >
                       تواصل معنا
                     </a>
                   </li>
@@ -647,6 +679,9 @@ const Navbar = () => {
       </header>
 
       <style jsx>{`
+      .offcanvas-backdrop.show{
+      opacity:0!important
+      }
         .search-container {
           position: relative;
           margin: 0 0px;
@@ -690,6 +725,94 @@ const Navbar = () => {
           content: none;
         }
 
+        /* نافذة السلة والمفضلة */
+        .dropdown-menu-lg-end.p-3 {
+          min-width: 270px;
+          max-width: 80vw;
+          left: 38% !important;
+          transform: translateX(-38%) !important;
+          border-radius: 14px;
+          box-shadow: 0 8px 32px rgba(64, 124, 124, 0.13);
+          background: #fff;
+          padding: 10px 6px;
+        }
+        .dropdown-menu-lg-end.p-3 h4 {
+          font-size: 1.05rem;
+        }
+        .dropdown-menu-lg-end.p-3 .list-group-item {
+          font-size: 0.85rem;
+          padding: 7px 4px;
+        }
+        .dropdown-menu-lg-end.p-3 .btn {
+          font-size: 0.8rem;
+          padding: 0.25rem 0.5rem;
+          border-radius: 8px;
+        }
+        .dropdown-menu-lg-end.p-3 .badge {
+          font-size: 0.7rem;
+        }
+        .dropdown-menu-lg-end.p-3 strong,
+        .dropdown-menu-lg-end.p-3 b {
+          font-size: 0.85rem;
+        }
+
+        @media (max-width: 991px) {
+          .dropdown-menu-lg-end.p-3 {
+            min-width: 65vw;
+            max-width: 70vw;
+            margin-right: -65px;
+        margin-left: -110px;
+            padding: 7px 2px;
+          }
+          .dropdown-menu-lg-end.p-3 h4 {
+            font-size: 0.95rem;
+          }
+          .dropdown-menu-lg-end.p-3 .list-group-item {
+            font-size: 0.8rem;
+            padding: 5px 2px;
+          }
+          .dropdown-menu-lg-end.p-3 .btn {
+            font-size: 0.7rem;
+            padding: 0.15rem 0.3rem;
+          }
+          .dropdown-menu-lg-end.p-3 .badge {
+            font-size: 0.6rem;
+          }
+          .dropdown-menu-lg-end.p-3 strong,
+          .dropdown-menu-lg-end.p-3 b {
+            font-size: 0.8rem;
+          }
+        }
+
+        @media (max-width: 500px) {
+          .dropdown-menu-lg-end.p-3 {
+            min-width: 65vw;
+            max-width: 70vw;
+            margin-right: -65px;
+        margin-left: -110px;
+            padding: 4px 1px;
+            border-radius: 8px;
+          }
+          .dropdown-menu-lg-end.p-3 h4 {
+            font-size: 0.85rem;
+          }
+          .dropdown-menu-lg-end.p-3 .list-group-item {
+            font-size: 0.7rem;
+            padding: 3px 1px;
+          }
+          .dropdown-menu-lg-end.p-3 .btn {
+            font-size: 0.6rem;
+            padding: 0.1rem 0.2rem;
+            border-radius: 5px;
+          }
+          .dropdown-menu-lg-end.p-3 .badge {
+            font-size: 0.5rem;
+          }
+          .dropdown-menu-lg-end.p-3 strong,
+          .dropdown-menu-lg-end.p-3 b {
+            font-size: 0.7rem;
+          }
+        }
         /* تعديلات للجوال */
         @media (max-width: 768px) {
           .search-container {

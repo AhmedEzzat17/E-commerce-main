@@ -46,6 +46,8 @@
 
   --body-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif!important;
   --heading-font:  'Segoe UI', Tahoma, Geneva, Verdana, sans-serif!important;
+}
+html {
   scroll-behavior: smooth;
 }
 

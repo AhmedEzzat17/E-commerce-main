@@ -50,6 +50,8 @@
   /* Fonts */
   --body-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
   --heading-font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+html {
   scroll-behavior: smooth;
 }
 
@@ -131,6 +133,7 @@ body {
   font-size: 18px;
   font-weight: 300;
   margin: 0;
+  overflow: auto!important;
 }
 
 p {
@@ -845,6 +848,7 @@ th {
   --bs-dropdown-link-active-color: var(--primary-color);
   --bs-dropdown-link-active-bg: #F5F5F5;
   --bs-dropdown-zindex: 99999;
+  margin-top: 40px;
 }
 
 .dropdown-item.active,
@@ -1023,6 +1027,10 @@ th {
   background-color: var(--accent-color);
   color: var(--white-color);
 }
+/* .offcanvas-backdrop{
+  display: none;
+  opacity: 0;
+} */
 
 
 /* ############################################################################################## */

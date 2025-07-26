@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useEffect} from "react";
+import React, { lazy, Suspense, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -7,8 +7,8 @@ import {
 } from "react-router-dom";
 
 // AOS library
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 import Navbar from "./components/Navbar/Navbar";
 import Billboard from "./components/Billboard/Billboard";
@@ -25,8 +25,6 @@ import ProductPage from "./pages/ProductPage";
 import FullRecentProductsPage from "./pages/FullRecentProductsPage";
 import AppRoutes from "./router/index";
 const Dashboard = lazy(() => import("./A-Dashboard/Dashboard"));
-
-
 
 function HomePageContent() {
   return (
@@ -46,14 +44,16 @@ function HomePageContent() {
 
 function AppContent() {
   const location = useLocation();
-  const isDashboardPage = location.pathname === "/Dashboard";
+  const isDashboardRoute = location.pathname.startsWith("/Dashboard");
 
   return (
     <>
-      {!isDashboardPage && <Navbar />}
-      <AppRoutes />
-      {!isDashboardPage && (
+      {isDashboardRoute ? (
+        <AppRoutes />
+      ) : (
         <>
+          <Navbar />
+          <AppRoutes />
           <FAQSection />
           <ContactSection />
           <Footer />
@@ -65,11 +65,9 @@ function AppContent() {
 }
 
 function App() {
-
   useEffect(() => {
-    AOS.init({ duration: 1500, once: false, });
+    AOS.init({ duration: 1500, once: false });
   }, []);
-
 
   return (
     <Router>

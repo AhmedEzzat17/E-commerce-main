@@ -138,7 +138,7 @@ export default function RecentProducts() {
                 <i className="fas fa-star"></i>
                 <span style={{ fontSize: "0.8em", color: "#777" }}>(56)</span>
               </div>
-              <div className="price">$119.00ر.س</div>
+              <div className="price">119.00ر.س</div>
               <button className="btn btn-primary add-to-cart-btn">
                 <i className="fas fa-shopping-cart"></i>إضافة للسلة{" "}
               </button>
@@ -182,7 +182,7 @@ export default function RecentProducts() {
                 </span>
                 <span style={{ fontSize: "0.8em", color: "#777" }}>(15)</span>
               </div>
-              <div className="price">$75.50ر.س</div>
+              <div className="price">75.50ر.س</div>
               <button className="btn btn-secondary add-to-cart-btn" disabled>
                 <i className="fas fa-times-circle"></i>نفذت الكمية
               </button>

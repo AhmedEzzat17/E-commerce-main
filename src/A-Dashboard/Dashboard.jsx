@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { Outlet } from "react-router-dom";
+import UserShow from "./users/UserShow";
 import "./Dashboard.css";
 import "boxicons/css/boxicons.min.css";
 import "bootstrap/dist/css/bootstrap.rtl.min.css";
-import UserCreate from './users/UserCreate';
-
+import UserCreate from "./users/UserCreate";
+import myImage from "../assets/images/resize_image_687b9e56ea086.png";
 
 function Dashboard() {
   // 1. حالة الشريط الجانبي والقوائم المنسدلة
@@ -32,6 +34,8 @@ function Dashboard() {
 
   // 5. حالة عرض صفحة إضافة مستخدم
   const [showUserCreate, setShowUserCreate] = useState(false);
+  // حالة عرض صفحة المستخدمين
+  const [showUserShow, setShowUserShow] = useState(false);
 
   // Effect لتحديد العنصر النشط عند تحميل الصفحة
   useEffect(() => {
@@ -104,7 +108,11 @@ function Dashboard() {
   const handleMenuItemClick = (e, id) => {
     e.preventDefault();
     setActiveMenuItem(id);
-    // يمكنك إضافة كود التوجيه (مثل navigate(id)) هنا إذا كنت تستخدم React Router
+    if (id === "users") {
+      setShowUserShow(true);
+    } else {
+      setShowUserShow(false);
+    }
   };
 
   const handleShowLogoutAlert = (e) => {
@@ -141,11 +149,7 @@ function Dashboard() {
       <section id="sidebar" className={isSidebarHidden ? "hide" : ""}>
         <div className="logo-box">
           <a href="#">
-            <img
-              src="assets/images/resize_image_687b9e56ea086.png"
-              alt="الشعار"
-              className="logo-img"
-            />
+            <img src={myImage} alt="الشعار" className="logo-img" />
           </a>
         </div>
 
@@ -154,7 +158,9 @@ function Dashboard() {
             <a
               href=""
               onClick={(e) => handleMenuItemClick(e, "home")}
-              className={`menu-item ${activeMenuItem === "home" ? "active" : ""}`}
+              className={`menu-item ${
+                activeMenuItem === "home" ? "active" : ""
+              }`}
               id="home"
             >
               <i className="bx bxs-home icon"></i> الرئيسية
@@ -164,7 +170,9 @@ function Dashboard() {
             <a
               href=""
               onClick={(e) => handleMenuItemClick(e, "committees")}
-              className={`menu-item ${activeMenuItem === "committees" ? "active" : ""}`}
+              className={`menu-item ${
+                activeMenuItem === "committees" ? "active" : ""
+              }`}
               id="committees"
             >
               <i className="bx bxs-category icon"></i> الأقسام
@@ -174,7 +182,9 @@ function Dashboard() {
             <a
               href=""
               onClick={(e) => handleMenuItemClick(e, "products")}
-              className={`menu-item ${activeMenuItem === "products" ? "active" : ""}`}
+              className={`menu-item ${
+                activeMenuItem === "products" ? "active" : ""
+              }`}
               id="products"
             >
               <i className="bx bxs-shopping-bag icon"></i> المنتجات
@@ -182,9 +192,11 @@ function Dashboard() {
           </li>
           <li>
             <a
-              href="/user"
+              href=""
               onClick={(e) => handleMenuItemClick(e, "offers")}
-              className={`menu-item ${activeMenuItem === "offers" ? "active" : ""}`}
+              className={`menu-item ${
+                activeMenuItem === "offers" ? "active" : ""
+              }`}
               id="offers"
             >
               <i className="bx bxs-offer icon"></i> العروض
@@ -192,9 +204,11 @@ function Dashboard() {
           </li>
           <li>
             <a
-              href="/user"
+              href=""
               onClick={(e) => handleMenuItemClick(e, "brands")}
-              className={`menu-item ${activeMenuItem === "brands" ? "active" : ""}`}
+              className={`menu-item ${
+                activeMenuItem === "brands" ? "active" : ""
+              }`}
               id="brands"
             >
               <i className="bx bxs-store icon"></i> جميع البراندات
@@ -202,29 +216,34 @@ function Dashboard() {
           </li>
           <li>
             <a
-              href="/user"
+              href=""
               onClick={(e) => handleMenuItemClick(e, "users")}
-              className={`menu-item ${activeMenuItem === "users" ? "active" : ""}`}
+              className={`menu-item ${
+                activeMenuItem === "users" ? "active" : ""
+              }`}
               id="users"
             >
               <i className="bx bxs-user icon"></i> المستخدمين
             </a>
           </li>
           <li>
-            <a
+            {/* <a
               href="#"
               onClick={handleShowUserCreate}
               className={`menu-item`}
               id="add-user"
             >
-              <i className="bx bxs-user-plus icon"></i> إضافة مستخدم جديد
-            </a>
+            <i className="bx bxs-user-plus icon">
+              </i> إضافة مستخدم جديد
+            </a> */}
           </li>
           <li>
             <a
-              href="/user"
+              href=""
               onClick={(e) => handleMenuItemClick(e, "favorites")}
-              className={`menu-item ${activeMenuItem === "favorites" ? "active" : ""}`}
+              className={`menu-item ${
+                activeMenuItem === "favorites" ? "active" : ""
+              }`}
               id="favorites"
             >
               <i className="bx bxs-heart icon"></i> المفضلات
@@ -232,9 +251,11 @@ function Dashboard() {
           </li>
           <li>
             <a
-              href="/user"
+              href=""
               onClick={(e) => handleMenuItemClick(e, "orders")}
-              className={`menu-item ${activeMenuItem === "orders" ? "active" : ""}`}
+              className={`menu-item ${
+                activeMenuItem === "orders" ? "active" : ""
+              }`}
               id="orders"
             >
               <i className="bx bxs-cart icon"></i> الأوردرات
@@ -242,9 +263,11 @@ function Dashboard() {
           </li>
           <li>
             <a
-              href="/user"
+              href=""
               onClick={(e) => handleMenuItemClick(e, "settings")}
-              className={`menu-item ${activeMenuItem === "settings" ? "active" : ""}`}
+              className={`menu-item ${
+                activeMenuItem === "settings" ? "active" : ""
+              }`}
               id="settings"
             >
               <i className="bx bxs-cog icon"></i> الاعدادات
@@ -254,7 +277,9 @@ function Dashboard() {
             <a
               href="login.html"
               onClick={handleShowLogoutAlert}
-              className={`menu-item logout-color ${activeMenuItem === "logout" ? "active" : ""}`}
+              className={`menu-item logout-color ${
+                activeMenuItem === "logout" ? "active" : ""
+              }`}
               id="logout"
             >
               <i className="bx bx-log-out icon"></i> تسجيل الخروج
@@ -398,7 +423,7 @@ function Dashboard() {
               onClick={handleToggleProfileDropdown}
             >
               <img
-                src="images/resize_image_687b9e56ea086.png"
+                src={myImage}
                 alt="الصورة"
                 className="rounded-circle"
                 id="profile-img"
@@ -427,7 +452,7 @@ function Dashboard() {
                 >
                   <div className="card-body text-center">
                     <img
-                      src="../assets/images/resize_image_687b9e56ea086.png"
+                      src={myImage}
                       alt="الصورة "
                       className="rounded-circle mb-2"
                       style={{
@@ -438,7 +463,7 @@ function Dashboard() {
                       }}
                     />
                     <h6 className="mb-0">أحمد محمد</h6>
-                    <small className="text-muted">مدير النظام</small>
+                    <small className="">مدير النظام</small>
                     <hr />
                     <div className="text-end">
                       <a href="#" className="dropdown-item">
@@ -466,6 +491,7 @@ function Dashboard() {
         {/* المحتوى الرئيسي */}
         <main id="main">
           {showUserCreate && <UserCreate />}
+          {showUserShow && <UserShow />}
         </main>
       </section>
 
